@@ -1,64 +1,95 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import supabase from '../utils/supabase'
 import { shuffleValues } from '../utils/commons'
 import styles from '../styles/QuestionScreen.module.css'
-import supabase from '../utils/supabase'
 
-const QuestionWrapper = ({ question, sessionId }) => {
+const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
     const [selectedAnswer, setSelectedAnswer] = useState('')
-    const router = useRouter()
+    const [selectedAnswers, setSelectedAnswers] = useState([])
+    const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
+    const [disableClick, setDisableClick] = useState(false)
 
-    if (!question) return <></>
+    function nextQuestion() {
+        setTimeout(() => {
+            setQuestionIndex(idx => idx + 1)
+            setSelectedAnswers([])
+            setIsAnswerCorrect(false)
+        }, 3000)
+    }
 
-    const onClickSubmit = async () => {
+    useEffect(() => {
+        if (!question) router.push('/profile')
+    }, [])
+
+    useEffect(() => {
+        if (!!selectedAnswers && selectedAnswers.length > 2) {
+            nextQuestion()
+        }
+    }, [selectedAnswers, setQuestionIndex])
+
+    useEffect(() => {
+        if (!!selectedAnswer && selectedAnswers.length < 3) {
+            checkAnswer()
+        }
+    }, [selectedAnswer])
+
+    const checkAnswer = async () => {
+        setDisableClick(true)
         const submitAnswerUrl = `${window.location.protocol}//${window.location.host}/api/sessions/${sessionId}/questions/${question.id}/submit`
         try {
             const submissionResponse = await fetch(submitAnswerUrl, {
                 method: 'post',
                 body: JSON.stringify({ selectedAnswer }),
                 headers: {
-                    'Authorization': `Bearer ${supabase.auth.session().access_token}`,
                     'content-type': 'application/json'
                 }
             })
 
             if (submissionResponse.status === 200) {
-                const response = await submissionResponse.json()
-                console.log(response)
-                router.push(`/sessions/${sessionId}/questions/${response.question}`)
+                const data = await submissionResponse.json()
+                setIsAnswerCorrect(data.status)
+                if (data.status) {
+                    nextQuestion()
+                } else {
+                    setSelectedAnswers([...selectedAnswers, selectedAnswer])
+                }
+            } else {
+                setSelectedAnswers([...selectedAnswers, selectedAnswer])
             }
         } catch (error) {
             //TODO show error
+            console.log(error)
         }
-
-
+        setDisableClick(false)
     }
 
-    return (
+    return question ? (
         <div className={styles.questionWrapper}>
-
             <div className={styles.questionBox}>
                 <div className={styles.questionText}>
                     {question.question}
                 </div>
             </div>
             <div className={styles.answersBox}>
-                {shuffleValues(question.options).map(answer => (
-                    <div className={`${styles.answerOption} ${selectedAnswer === answer ? styles.selected : ''}`} key={answer.value} onClick={() => setSelectedAnswer(answer.value)}>
+                {question.options.map(answer => (
+                    <div
+                        className={`${styles.answerOption} ${selectedAnswer === answer.value ? styles.selected : ''} ${selectedAnswers.includes(answer.value) ? styles.errorBlink : ''} ${isAnswerCorrect && selectedAnswer === answer.value ? styles.successBlink : ''}`}
+                        key={answer.value}
+                        onClick={() => (disableClick) ? false : setSelectedAnswer(answer.value)}>
                         {answer.value}
                     </div>
                 ))}
 
             </div>
 
-            <div className={styles.buttonContainer}>
+            {/* <div className={styles.buttonContainer}>
                 <button className={styles.button} disabled={!selectedAnswer} onClick={() => setSelectedAnswer('')}>
                     Clear
                 </button>
                 <button className={styles.button} disabled={!selectedAnswer} onClick={() => onClickSubmit()}>
                     SUBMIT
                 </button>
-            </div>
+            </div> */}
 
             <div className={styles.helpBox}>
                 <div className={styles.helpItem}>
@@ -72,7 +103,7 @@ const QuestionWrapper = ({ question, sessionId }) => {
                 </div>
             </div>
         </div>
-    )
+    ) : <></>
 }
 
 export default QuestionWrapper

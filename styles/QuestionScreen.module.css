@@ -2,7 +2,6 @@
     height: 100vh;
     width: 100vw;
     display: flex;
-    background-color: rgb(15, 83, 143);
     justify-content: center;
     align-items: center;
 }
@@ -15,8 +14,7 @@
     padding-top: 3rem;
     padding-bottom: 3rem;
     flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
 }
 
 .detailsBox,
@@ -45,16 +43,16 @@
 }
 
 .questionText {
-    border: 1px solid #eee;
     margin: 1rem 1rem;
     text-align: center;
     min-height: 7rem;
     width: 100%;
     display: flex;
+    font-size: larger;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 16px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
 }
 
 .answersBox {
@@ -73,24 +71,45 @@
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    border: 1px solid #eee;
+    border: 1px solid rgba(0, 0, 0, 0.5);
     margin: 1rem;
     cursor: pointer;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    position: relative;
+    transition: 0.5s;
+    overflow: hidden;
+    z-index: 1;
+    font-size: larger;
+    box-shadow: rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
 }
 
 .answerOption:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 7px 15px;
+    background-color: rgb(24, 39, 58);
 }
 
 .answerOption:active {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.answerOption::before {
+    content: '';
+    width: 10rem;
+    position: absolute;
+    height: 100%;
+    background-color: rgba(238, 238, 238, 0.3);
+    transform: skewX(-20deg) translateX(-30rem);
+    filter: blur(20px);
+    transition: 0.3s;
+    z-index: -1;
+}
+
+.answerOption:hover::before {
+    transform: translateX(30rem);
+}
+
 .selected {
-    border: 2px solid rgb(2, 2, 109);
-    background-color: rgba(2, 2, 109, 0.1);
-    box-shadow: rgba(2, 2, 109, 0.3) 0px 5px 12px;
+    border: 2px solid rgb(172, 172, 172);
+    background-color: rgb(24, 39, 58);
+    box-shadow: rgba(199, 199, 199, 0.3) 0px 7px 25px;
 }
 
 .questionWrapper {
@@ -137,7 +156,7 @@
     height: 5rem;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid #eee;
+    /* border: 1px solid #eee; */
 }
 
 .detailText {
@@ -182,27 +201,65 @@
     border-radius: 5px;
     padding: 0.2rem;
     margin: 0px 1.2rem;
-    background-color: blue;
-    color: #eee;
-    border: 1px solid rgb(70, 70, 70);
+    background-color: var(--bgColor);
+    color: var(--white);
+    border: 1px solid rgba(145, 145, 145, 0.74);
     cursor: pointer;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    box-shadow: rgba(60, 64, 67, 0.5) 0px 1px 2px 0px, rgba(60, 64, 67, 0.55) 0px 2px 6px 2px;
 }
 
 .button:hover {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 5px;
+    box-shadow: rgba(0, 0, 0, 0.9) 0px 7px 10px;
 }
 
 .button:disabled {
     backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 255, 0.253);
+    background-color: rgba(78, 78, 78, 0.3);
     box-shadow: rgba(0, 0, 0, 0.03) 0px 1px 2px;
+    cursor: not-allowed;
 }
 
 .button:active {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
+.errorBlink {
+    animation: errorBlink 1s infinite;
+}
+
+@keyframes errorBlink {
+    from { 
+        border: 2px solid rgba(199, 0, 0, 0.7);
+        background-color: rgba(182, 69, 4, 0.5);
+    }
+    50% { 
+        border: 2px solid rgba(85, 3, 3, 0.959);
+        background-color: rgba(138, 53, 4, 0.856);
+    }
+    to { 
+        border: 2px solid rgba(199, 0, 0, 0.7);
+        background-color: rgba(182, 69, 4, 0.5);
+    }
+}
+
+.successBlink {
+    animation: successBlink 5s infinite;
+}
+
+@keyframes successBlink {
+    from { 
+        border: 2px solid rgba(3, 110, 3, 0.7);
+        background-color: rgba(5, 85, 38, 0.836);
+    }
+    50% { 
+        border: 2px solid rgba(9, 228, 2, 0.959);
+        background-color: rgba(7, 104, 31, 0.856);
+    }
+    to { 
+        border: 2px solid rgba(3, 110, 3, 0.7);
+        background-color: rgba(5, 85, 38, 0.836);
+    }
+}
 
 @media only screen and (min-width: 1800px) {
     .answerOption {
@@ -257,7 +314,6 @@
         min-width: 10rem;
         width: 100%;
         border-radius: 5px;
-        border: 1px solid #eee;
         margin: 0.2rem;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 6px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     }
