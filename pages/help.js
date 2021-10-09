@@ -29,7 +29,7 @@ const index = () => {
             </div>
             <div className={styles.helpBox}>
                 <h3>Scoring</h3>
-                <p>Every question has a base score. Based on the number of attempts for the question, the actual score that you get changes. The lower the number of attempts, the better the score</p>
+                <p>Every question has a base score. Based on the number of attempts for the question, the actual score that you get changes. The lower the number of attempts, the better the score. If you do not answer a question, the same base score is subtracted from your total score</p>
             </div>
             <div className={styles.helpBox}>
                 <h3>Tools</h3>

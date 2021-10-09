@@ -37,6 +37,10 @@ export default function Trivia({ user, questions, sessionId }) {
         if (questions.length === 0) {
             router.push('/')
         }
+        if (questionIndex >= questions.length) {
+            alert("Questions over. Ending the session!!!")
+            router.push('/')
+        }
     }, [questionIndex, questions, user, sessionId])
 
     return questions ? (

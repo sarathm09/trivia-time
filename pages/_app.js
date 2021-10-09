@@ -67,8 +67,8 @@ function MyApp({ Component, pageProps }) {
                 </div>
                 <div style={rightButtons}>
                     {authenticatedState === 'authenticated' && (
-                        <a style={linkStyle} onClick={() => {
-                            supabase.auth.signOut()
+                        <a style={linkStyle} onClick={async () => {
+                            await supabase.auth.signOut()
                             router.push('/sign-in')
                         }}>Sign Out</a>
                     )}

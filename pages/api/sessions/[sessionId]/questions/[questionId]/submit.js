@@ -29,13 +29,17 @@ async function getQuestion(questionId, res) {
 }
 
 
-function getScoreForQuestion(baseScore, attempts) {
-    if (attempts === 1) {
-        return baseScore
-    } if (attempts === 2) {
-        return baseScore / 2
-    } if (attempts === 3) {
-        return baseScore / 5
+function getScoreForQuestion(baseScore, attempts, isAnswerCorrect) {
+    if (isAnswerCorrect) {
+        if (attempts === 1) {
+            return baseScore
+        } if (attempts === 2) {
+            return baseScore / 2
+        } if (attempts === 3) {
+            return baseScore / 5
+        }
+    } else if (attempts === 3) {
+        return -1 * baseScore
     }
 
     return 0
@@ -57,7 +61,7 @@ async function addScoreToSession(userId, sessionId, score) {
         })
 }
 
-async function logQuestionAttempt(userId, sessionId, question, answer, score = 0) {
+async function logQuestionAttempt(userId, sessionId, question, answer, score = 0, isAnswerCorrect) {
     const { data, error } = await supabase
         .from('session_questions')
         .select('*')
@@ -66,8 +70,8 @@ async function logQuestionAttempt(userId, sessionId, question, answer, score = 0
         .neq('answer', null)
         .order('attempt', { ascending: false })
 
-    const attempt = (data[0]?.attempt + 1) || 1
-    score = getScoreForQuestion(score, (data[0]?.attempt + 1) || 1)
+    const attempt = (data[0]?.attempt || 0) + 1
+    score = getScoreForQuestion(score, (data[0]?.attempt + 1) || 1, isAnswerCorrect)
 
     await Promise.all([
         supabase
@@ -92,15 +96,14 @@ export default async function handler(req, res) {
     if (await isSessionValid(user.id, sessionId, res)) {
         const question = await getQuestion(questionId, res)
 
+        let score = await logQuestionAttempt(user.id, sessionId, question, req.body.selectedAnswer, question.base_score, req.body.selectedAnswer === question.answer)
         if (question && req.body.selectedAnswer === question.answer) {
-            let score = await logQuestionAttempt(user.id, sessionId, question, req.body.selectedAnswer, question.base_score)
             res.status(200).json({
                 status: true,
                 score
             })
         } else {
             // attempt++
-            let score = await logQuestionAttempt(user.id, sessionId, question, req.body.selectedAnswer, 0)
             res.status(200).json({
                 status: false,
                 score
