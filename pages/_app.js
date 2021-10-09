@@ -56,11 +56,11 @@ function MyApp({ Component, pageProps }) {
                             <a style={linkStyle}>Sign In</a>
                         </Link>
                     )}
-                    {authenticatedState === 'authenticated' && (
+                    {/* {authenticatedState === 'authenticated' && (
                         <Link href="/play/trivia">
                             <a style={linkStyle}>Continue previous game</a>
                         </Link>
-                    )}
+                    )} */}
                     <Link href="/help" >
                         <a style={homeLink}>Help</a>
                     </Link>
