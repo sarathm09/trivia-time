@@ -28,6 +28,35 @@ async function getQuestion(questionId, res) {
     return questions[0]
 }
 
+
+function getScoreForQuestion(baseScore, attempts) {
+    if (attempts === 1) {
+        return baseScore
+    } if (attempts === 2) {
+        return baseScore / 2
+    } if (attempts === 3) {
+        return baseScore / 5
+    }
+
+    return 0
+}
+
+async function addScoreToSession(userId, sessionId, score) {
+    const { data, error: _ } = await supabase
+        .from('session')
+        .select('*')
+        .eq('session_id', sessionId)
+
+    await supabase
+        .from('session')
+        .upsert({
+            user_id: userId,
+            session_id: sessionId,
+            score: data[0].score + score,
+            updated_at: new Date().toUTCString()
+        })
+}
+
 async function logQuestionAttempt(userId, sessionId, question, answer, score = 0) {
     const { data, error } = await supabase
         .from('session_questions')
@@ -37,16 +66,23 @@ async function logQuestionAttempt(userId, sessionId, question, answer, score = 0
         .neq('answer', null)
         .order('attempt', { ascending: false })
 
-    await supabase
-        .from('session_questions')
-        .upsert({
-            session_id: sessionId,
-            question_id: question.id,
-            attempt: (data[0]?.attempt + 1) || 1,
-            answer,
-            score: score / ((data[0]?.attempt + 1) || 1)
-        })
-    return score / ((data[0]?.attempt + 1) || 1)
+    const attempt = (data[0]?.attempt + 1) || 1
+    score = getScoreForQuestion(score, (data[0]?.attempt + 1) || 1)
+
+    await Promise.all([
+        supabase
+            .from('session_questions')
+            .upsert({
+                session_id: sessionId,
+                question_id: question.id,
+                attempt,
+                answer,
+                score
+            }),
+        addScoreToSession(userId, sessionId, score)
+    ])
+
+    return score
 }
 
 export default async function handler(req, res) {

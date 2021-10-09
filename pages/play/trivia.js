@@ -9,7 +9,6 @@ import QuestionWrapper from '../../components/QuestionWrapper'
 export default function Trivia({ user, questions, sessionId }) {
     const [questionIndex, setQuestionIndex] = useState(0)
     const [enableConfetti, setConfettiEnabled] = useState(false)
-    const [userScore, setUserScore] = useState(0)
 
     const router = useRouter()
 
@@ -33,10 +32,10 @@ export default function Trivia({ user, questions, sessionId }) {
 
     useEffect(() => {
         if (!!user && !!questions && questions.length > 0 && !!sessionId) {
-            logQuestionAttempt(user.id, sessionId, questions[questionIndex])
+            // logQuestionAttempt(user.id, sessionId, questions[questionIndex])
         }
         if (questions.length === 0) {
-            router.push('/profile')
+            router.push('/')
         }
     }, [questionIndex, questions, user, sessionId])
 

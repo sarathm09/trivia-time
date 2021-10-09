@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
             handleAuthChange(event, session)
             if (event === 'SIGNED_IN') {
                 setAuthenticatedState('authenticated')
-                router.push('/profile')
+                router.push('/')
             }
             if (event === 'SIGNED_OUT') {
                 setAuthenticatedState('not-authenticated')
@@ -47,24 +47,32 @@ function MyApp({ Component, pageProps }) {
     return (
         <div>
             <nav style={navStyle}>
-                <Link href="/">
-                    <a style={linkStyle}>Home</a>
-                </Link>
-                {authenticatedState === 'authenticated' && (
-                    <Link href="/profile">
-                        <a style={linkStyle}>Profile</a>
+                <div style={leftButtons}>
+                    <Link href="/" >
+                        <a style={homeLink}>Trivia Time</a>
                     </Link>
-                )}
-                {authenticatedState === 'not-authenticated' && (
-                    <Link href="/sign-in">
-                        <a style={linkStyle}>Sign In</a>
+                    {authenticatedState === 'not-authenticated' && (
+                        <Link href="/sign-in">
+                            <a style={linkStyle}>Sign In</a>
+                        </Link>
+                    )}
+                    {/* {authenticatedState === 'authenticated' && (
+                        <Link href="/play/trivia">
+                            <a style={linkStyle}>Continue previous game</a>
+                        </Link>
+                    )} */}
+                    <Link href="/help" >
+                        <a style={homeLink}>Help</a>
                     </Link>
-                )}
-                {authenticatedState === 'authenticated' && (
-                    <Link href="/play/trivia">
-                        <a style={linkStyle}>Play</a>
-                    </Link>
-                )}
+                </div>
+                <div style={rightButtons}>
+                    {authenticatedState === 'authenticated' && (
+                        <a style={linkStyle} onClick={() => {
+                            supabase.auth.signOut()
+                            router.push('/sign-in')
+                        }}>Sign Out</a>
+                    )}
+                </div>
             </nav>
             <Component {...pageProps} />
         </div>
@@ -72,10 +80,33 @@ function MyApp({ Component, pageProps }) {
 }
 
 const navStyle = {
-    margin: 20
+    display: 'flex',
+    height: '5rem',
+    alignItems: 'center',
+    padding: '0 1.2rem',
+    boxShadow: 'rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px'
 }
+
+const homeLink = {
+    marginRight: '2rem',
+    cursor: 'pointer'
+}
+
 const linkStyle = {
-    marginRight: 10
+    marginRight: 10,
+    cursor: 'pointer'
 }
+const rightButtons = {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    display: 'flex'
+}
+
+const leftButtons = {
+    flexGrow: 5,
+    display: 'flex',
+    gap: '1rem'
+}
+
 
 export default MyApp

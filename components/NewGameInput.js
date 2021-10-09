@@ -61,7 +61,7 @@ const NewGameInput = ({ profile }) => {
 
     return (
         <>
-            <h3 className={styles.subTitle}>New Game</h3>
+            <h2 className={styles.subTitle}>New Game</h2>
             <div className={styles.newSessionDetails}>
                 <div className={styles.category}>
                     <div className={styles.buttonHeader}>
@@ -97,7 +97,7 @@ const NewGameInput = ({ profile }) => {
                         ))}
                     </div>
                 </div>
-                <button className={styles.start} onClick={() => handleNewGameBtnClick()}>
+                <button title="Select the categories and difficulties and click here to start the game" disabled={!selectedCategories.length || !selectedDifficulties.length} className={styles.start} onClick={() => handleNewGameBtnClick()}>
                     Start
                 </button>
             </div>

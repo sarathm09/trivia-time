@@ -26,7 +26,7 @@ a {
 }
 
 .container {
-    height: 100vh;
+    height: calc(100vh - 5rem);
     width: 70vw;
     min-height: 100vh;
     max-width: 500px;
