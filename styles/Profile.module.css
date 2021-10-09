@@ -13,9 +13,19 @@
     gap: 2rem;
 }
 
+.contentBox {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    align-items: stretch;
+}
+
 .newSessionBox,
 .scoreBox {
-    width: 100%;
+    flex: 1;
     display: flex;
     border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
@@ -41,6 +51,8 @@
 .subTitle {
     width: 100%;
     display: flex;
+    font-size: larger;
+    margin: 2rem 0rem;
     justify-content: center;
 }
 
@@ -67,7 +79,82 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--borderFormEls);
+    border: 1px solid rgba(224, 224, 224, 0.87);
+    border-radius: 10px;
     background-color: var(--bgFormEls);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+}
+
+.buttonHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonHeader b {
+    flex-grow: 3 !important;
+    min-width: 50%;
+    margin: 1rem 0.2rem;
+}
+
+.buttonHeader button {
+    flex-grow: 1;
+    justify-content: center;
+    height: 1rem !important;
+    margin: 0px 3px;
+    padding: 0;
+    height: 1.5rem;
+    min-height: 1.5rem !important;
+    border: 1px solid rgba(224, 224, 224, 0.116);
+    box-shadow: rgba(109, 111, 112, 0.151) 0px 1px 2px 0px, rgba(60, 64, 67, 0.185) 0px 2px 6px 2px;
+}
+
+.button {
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0px 0.5rem;
+    background-color: var(--bgColor);
+    color: var(--white);
+    border: 1px solid rgba(224, 224, 224, 0.87);
+    cursor: pointer;
+    box-shadow: rgba(109, 111, 112, 0.5) 0px 1px 2px 0px, rgba(60, 64, 67, 0.55) 0px 2px 6px 2px;
+}
+
+.button:hover {
+    box-shadow: rgba(0, 0, 0, 0.9) 0px 7px 10px;
+}
+
+.button:disabled {
+    backdrop-filter: blur(5px);
+    background-color: rgba(78, 78, 78, 0.3);
+    box-shadow: rgba(0, 0, 0, 0.03) 0px 1px 2px;
+    cursor: not-allowed;
+}
+
+.button:active {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.errorBlink {
+    animation: errorBlink 1s infinite;
+}
+
+.buttonSelected {
+    color: rgb(225, 229, 243);
+    border: 1px solid rgb(21, 96, 139);
+}
+
+.category, .difficulty {
+    width: 100%;
+    padding: 1rem;
 }
