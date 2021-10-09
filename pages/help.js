@@ -1,4 +1,4 @@
-import styles from '#styles/Help.module.css'
+import styles from '#styles/Help.module.css';
 
 const index = () => {
     return (
@@ -15,11 +15,11 @@ const index = () => {
                         <li>Signing in with Twitter</li>
                     </ul>
 
-                    In the first approach, you have to enter your email address and we'll mail you a top secret "magic" link 😉
-                    Just click on the link and you'll be redirected to the app and magically logged in 🙂
+                    In the first approach, you have to enter your email address and we&apos;ll mail you a top secret &quot;magic&quot; link 😉
+                    Just click on the link and you&apos;ll be redirected to the app and magically logged in 🙂
                     <br />
                     <br />
-                    In the other approaches, just click on the button, it'll redirect you to the signin page of the provider. Provide the credentials mentioned by the provider and you'll be able to signin in into this app.
+                    In the other approaches, just click on the button, it&apos;ll redirect you to the signin page of the provider. Provide the credentials mentioned by the provider and you&apos;ll be able to signin in into this app.
                 </p>
             </div>
             <div className={styles.helpBox}>
