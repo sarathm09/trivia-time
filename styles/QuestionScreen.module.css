@@ -259,7 +259,7 @@
 }
 
 .errorBlink {
-    animation: errorBlink 1s infinite;
+    animation: errorBlink 3s infinite;
 }
 
 @keyframes errorBlink {
@@ -278,7 +278,7 @@
 }
 
 .successBlink {
-    animation: successBlink 5s infinite;
+    animation: successBlink 1s infinite;
 }
 
 @keyframes successBlink {
