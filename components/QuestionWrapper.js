@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
 import supabase from '../utils/supabase'
-import { shuffleValues } from '../utils/commons'
+import { useEffect, useState } from 'react'
 import styles from '../styles/QuestionScreen.module.css'
 
-const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
+const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router, setConfettiEnabled }) => {
     const [selectedAnswer, setSelectedAnswer] = useState('')
     const [selectedAnswers, setSelectedAnswers] = useState([])
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
@@ -11,9 +10,11 @@ const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
 
     function nextQuestion() {
         setTimeout(() => {
+            setConfettiEnabled(false)
             setQuestionIndex(idx => idx + 1)
             setSelectedAnswers([])
             setIsAnswerCorrect(false)
+            setDisableClick(false)
         }, 3000)
     }
 
@@ -23,7 +24,11 @@ const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
 
     useEffect(() => {
         if (!!selectedAnswers && selectedAnswers.length > 2) {
+            setSelectedAnswer(question.options.filter(op => !selectedAnswers.includes(op.value))[0].value)
+            setIsAnswerCorrect(true)
             nextQuestion()
+        } else if (!isAnswerCorrect) {
+            setDisableClick(false)
         }
     }, [selectedAnswers, setQuestionIndex])
 
@@ -49,6 +54,7 @@ const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
                 const data = await submissionResponse.json()
                 setIsAnswerCorrect(data.status)
                 if (data.status) {
+                    setConfettiEnabled(true)
                     nextQuestion()
                 } else {
                     setSelectedAnswers([...selectedAnswers, selectedAnswer])
@@ -60,11 +66,32 @@ const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
             //TODO show error
             console.log(error)
         }
-        setDisableClick(false)
+    }
+
+    function getScoreForQuestion(baseScore) {
+        if (selectedAnswers.length === 0) {
+            return baseScore
+        } if (selectedAnswers.length === 1) {
+            return baseScore / 2
+        } if (selectedAnswers.length === 2) {
+            return baseScore / 5
+        }
+        return 0
     }
 
     return question ? (
         <div className={styles.questionWrapper}>
+            <div className={styles.detailsBox}>
+                <div className={styles.detailItem}>
+                    Category: {question.category.split(':').slice(-1)[0].trim()}
+                </div>
+                <div className={styles.detailItem}>
+                    Difficulty: {question.difficulty.toUpperCase()}
+                </div>
+                <div className={styles.detailItem}>
+                    Score: {getScoreForQuestion(question.baseScore)}
+                </div>
+            </div>
             <div className={styles.questionBox}>
                 <div className={styles.questionText}>
                     {question.question}
@@ -79,29 +106,20 @@ const QuestionWrapper = ({ question, sessionId, setQuestionIndex, router }) => {
                         {answer.value}
                     </div>
                 ))}
-
             </div>
 
-            {/* <div className={styles.buttonContainer}>
-                <button className={styles.button} disabled={!selectedAnswer} onClick={() => setSelectedAnswer('')}>
-                    Clear
-                </button>
-                <button className={styles.button} disabled={!selectedAnswer} onClick={() => onClickSubmit()}>
-                    SUBMIT
-                </button>
+            {/* <div className={styles.helpBox}>
+                <div className={styles.helpItem}>
+                    <button className={styles.button}>
+                        Skip this question
+                    </button>
+                </div>
+                <div className={styles.helpItem}>
+                    <button className={styles.button}>
+                        Remove one option
+                    </button>
+                </div>
             </div> */}
-
-            <div className={styles.helpBox}>
-                <div className={styles.helpItem}>
-
-                </div>
-                <div className={styles.helpItem}>
-
-                </div>
-                <div className={styles.helpItem}>
-
-                </div>
-            </div>
         </div>
     ) : <></>
 }

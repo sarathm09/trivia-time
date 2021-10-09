@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react'
+import Confetti from 'react-confetti'
+import { useRouter } from 'next/router'
 import { supabase } from '#utils/supabase'
+import { useEffect, useState } from 'react'
 import { shuffleValues } from '../../utils/commons'
 import styles from '#styles/QuestionScreen.module.css'
 import QuestionWrapper from '../../components/QuestionWrapper'
-import { useRouter } from 'next/router'
 
 export default function Trivia({ user, questions, sessionId }) {
     const [questionIndex, setQuestionIndex] = useState(0)
+    const [enableConfetti, setConfettiEnabled] = useState(false)
+    const [userScore, setUserScore] = useState(0)
+
     const router = useRouter()
 
     async function logQuestionAttempt(userId, sessionId, question) {
@@ -38,6 +42,8 @@ export default function Trivia({ user, questions, sessionId }) {
 
     return questions ? (
         <div className={styles.root}>
+            <Confetti className={`${styles.confetti} ${!enableConfetti ? styles.disableConfetti : styles.enableConfetti}`} width={'10000'} height={'1000'}>
+            </Confetti>
             <div className={styles.container}>
                 <div className={styles.detailsBox}>
                     <div className={styles.detailCardSmall}>
@@ -49,9 +55,11 @@ export default function Trivia({ user, questions, sessionId }) {
                     user={user}
                     router={router}
                     setQuestionIndex={setQuestionIndex}
+                    setConfettiEnabled={setConfettiEnabled}
                 />
             </div>
-        </div>
+
+        </div >
     ) : <></>
 }
 
@@ -60,6 +68,7 @@ async function getQuestionAskedInSession(sessionId) {
         .from('session_questions')
         .select('question_id')
         .eq('session_id', sessionId)
+        .eq('answer', null)
     return questionsAsked?.map(q => q.question_id) || []
 }
 
@@ -85,7 +94,6 @@ async function getNextSetOfQuestions(sessionId, difficulty, categories) {
             .in('category', categories)
             .limit(1500)
         questions = shuffleValues(data)
-        console.log(questions[0].question)
     }
     return questions
 }
@@ -116,6 +124,7 @@ export async function getServerSideProps({ req }) {
                 question: q.question,
                 category: q.category,
                 difficulty: q.difficulty,
+                baseScore: q.base_score,
                 options: shuffleValues(q.options.map(option => ({
                     value: option,
                     enabled: true

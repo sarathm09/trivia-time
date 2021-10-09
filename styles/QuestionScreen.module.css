@@ -29,18 +29,6 @@
     flex-wrap: wrap;
 }
 
-.detailCard,
-.detailCardSmall {
-    height: 7rem;
-    min-width: 10rem;
-    flex-grow: 1;
-    margin: 0px 0.3rem;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.16);
-}
 
 .questionText {
     margin: 1rem 1rem;
@@ -52,7 +40,29 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    word-break: break-word;
     box-shadow: rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
+}
+
+.detailsBox {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem
+}
+
+.detailItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    height: 3rem;
+    min-width: 10rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
 }
 
 .answersBox {
@@ -79,7 +89,24 @@
     overflow: hidden;
     z-index: 1;
     font-size: larger;
+    word-break: break-word;
+    text-align: center;
     box-shadow: rgba(0, 0, 0, 0.76) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
+}
+
+.confetti {
+    width: 100vw;
+    height: 100vh;
+}
+
+.disableConfetti {
+    display: none;
+    visibility: hidden;
+}
+
+.enableConfetti {
+    display: block;
+    visibility: visible;
 }
 
 .answerOption:hover {
@@ -122,18 +149,26 @@
 
 .helpBox {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .helpItem {
     min-height: 5rem;
     min-width: 100px;
-    max-width: 200px;
     margin: 0rem 1rem;
-    flex-grow: 1;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.16);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.helpItem button {
+    width: 100%;
+    height: 3rem;
+    padding: 0.2rem 1.5rem;
+    box-shadow: none !important;
+    color: rgba(179, 179, 179, 0.9);
 }
 
 .detailCard {
@@ -228,15 +263,15 @@
 }
 
 @keyframes errorBlink {
-    from { 
+    from {
         border: 2px solid rgba(199, 0, 0, 0.7);
         background-color: rgba(182, 69, 4, 0.5);
     }
-    50% { 
+    50% {
         border: 2px solid rgba(85, 3, 3, 0.959);
         background-color: rgba(138, 53, 4, 0.856);
     }
-    to { 
+    to {
         border: 2px solid rgba(199, 0, 0, 0.7);
         background-color: rgba(182, 69, 4, 0.5);
     }
@@ -247,15 +282,15 @@
 }
 
 @keyframes successBlink {
-    from { 
+    from {
         border: 2px solid rgba(3, 110, 3, 0.7);
         background-color: rgba(5, 85, 38, 0.836);
     }
-    50% { 
+    50% {
         border: 2px solid rgba(9, 228, 2, 0.959);
         background-color: rgba(7, 104, 31, 0.856);
     }
-    to { 
+    to {
         border: 2px solid rgba(3, 110, 3, 0.7);
         background-color: rgba(5, 85, 38, 0.836);
     }
