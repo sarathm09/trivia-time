@@ -2,7 +2,6 @@
     height: 100vh;
     width: 70vw;
     min-height: 100vh;
-    max-width: 500px;
     padding: 0 0.5rem;
     margin-left: auto;
     margin-right: auto;
@@ -15,8 +14,9 @@
 
 .signInBox {
     height: 45vh;
-    width: 30vw;
-    min-width: 30rem;
+    width: 100%;
+    min-width: 50rem;
+    max-width: 30vw;
     display: flex;
     justify-content: space-between;
     align-items: center;

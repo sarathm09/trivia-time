@@ -20,7 +20,7 @@
     flex-direction: row;
     gap: 1rem;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     margin-top: 5rem;
 }
 
@@ -29,9 +29,9 @@
     flex: 1;
     height: fit-content;
     min-width: 30rem;
+    flex-direction: column;
     display: flex;
     border-radius: 1rem;
-    padding: 2rem;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
 }
 
@@ -44,12 +44,10 @@
 }
 
 .newSessionBox {
+    flex-grow: 1;
     min-height: 12vh;
+    padding: 2rem;
     flex-direction: column;
-}
-
-.scoreBox {
-    min-height: 50vh;
 }
 
 .subTitle {
@@ -169,4 +167,105 @@
 .difficulty {
     width: 100%;
     padding: 1rem;
+}
+
+.profileCardsBox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.scoreBox {
+    padding: 0.5rem;
+    flex-grow: 2;
+}
+
+.profileCard {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 10rem;
+    max-width: 12rem;
+    min-width: 7rem;
+    height: 7rem;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.753);
+    border-radius: 10px;
+    box-shadow: inset rgba(0, 0, 0, 0.253) 0px 10px 36px 0px, rgba(0, 0, 0, 0.36) 0px 0px 0px 1px;
+}
+
+.profileCardIcon {
+    color: white;
+    width: 2rem;
+    height: 2rem;
+}
+
+.profileMiniCardIcon {
+    flex-grow: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.profileMiniCardContent {
+    flex-grow: 3;
+    width: 6rem;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.profileMiniCardContent i {
+    font-size: 0.7rem;
+    word-break: break-word;
+}
+
+.profileMiniCardContent b {
+    font-size: 1.5rem;
+    word-break: break-word;
+}
+
+.userSessionsList {
+    margin: 1rem 0;
+    max-height: 30rem;
+    overflow-y: scroll;
+}
+
+.userSessionsList h3 {
+    margin-left: 1rem;
+}
+
+.userSessionsTable {
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+    border-radius: 10px;
+    padding: 0.5rem;
+    text-align: start;
+    border-collapse: collapse; 
+    box-shadow: rgba(29, 29, 29, 0.527) 0px 10px 36px 0px
+}
+
+.userSessionsTable th,
+.userSessionsTable td {
+    padding: 0.2rem;
+    text-align: start;
+    word-wrap: break-word;
+    max-width: 20rem;
+    height: 2rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 245, 238, 0.205);
+}
+
+.userSessionsTable tr {
+    box-shadow: rgba(29, 29, 29, 0.527) 0px 10px 36px 0px
+}
+
+.activeRow {
+    cursor: pointer;
 }
