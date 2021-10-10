@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         /* fires when a user signs in or out */
-        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+        supabase.auth.onAuthStateChange((event, session) => {
             handleAuthChange(event, session)
             if (event === 'SIGNED_IN') {
                 setAuthenticatedState('authenticated')
@@ -21,9 +21,6 @@ function MyApp({ Component, pageProps }) {
             }
         })
         checkUser()
-        return () => {
-            authListener.unsubscribe()
-        }
     }, [])
 
     async function checkUser() {

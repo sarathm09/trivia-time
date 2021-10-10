@@ -49,7 +49,6 @@ export default function Profile({ userSessions, lastGameScore, totalScore, highe
 
 export async function getServerSideProps({ req }) {
     const { user } = await supabase.auth.api.getUserByCookie(req)
-    console.log(user)
 
     if (!user) {
         return { props: {}, redirect: { destination: '/sign-in' } }
@@ -70,7 +69,6 @@ export async function getServerSideProps({ req }) {
             .limit(10000)
     ])
     const userSessions = results[0].data
-    let topScorers = []
 
     for (let i = 0; i < userSessions.length; i++) {
         const session = userSessions[i]
