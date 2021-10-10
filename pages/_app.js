@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import '../styles/globals.css'
 import { useRouter } from 'next/router'
 import { supabase } from '#utils/supabase'
@@ -8,19 +9,18 @@ function MyApp({ Component, pageProps }) {
     const router = useRouter()
     const [authenticatedState, setAuthenticatedState] = useState('not-authenticated')
 
-    /* fires when a user signs in or out */
-    supabase.auth.onAuthStateChange((event, session) => {
-        handleAuthChange(event, session)
-        if (event === 'SIGNED_IN') {
-            setAuthenticatedState('authenticated')
-            router.push('/')
-        }
-        if (event === 'SIGNED_OUT') {
-            setAuthenticatedState('not-authenticated')
-        }
-    })
-
     useEffect(() => {
+        /* fires when a user signs in or out */
+        supabase.auth.onAuthStateChange((event, session) => {
+            handleAuthChange(event, session)
+            if (event === 'SIGNED_IN') {
+                setAuthenticatedState('authenticated')
+                router.push('/')
+            }
+            if (event === 'SIGNED_OUT') {
+                setAuthenticatedState('not-authenticated')
+            }
+        })
         checkUser()
     }, [])
 
@@ -53,13 +53,8 @@ function MyApp({ Component, pageProps }) {
             <nav style={navStyle}>
                 <div style={leftButtons}>
                     <Link href="/" >
-                        <a style={homeLink}>Trivia Time</a>
+                        <a style={homeLink}><Image src="/favicon.png" height="20" width="20" alt="logo" />&nbsp;Trivia Time</a>
                     </Link>
-                    {authenticatedState === 'not-authenticated' && (
-                        <Link href="/sign-in">
-                            <a style={linkStyle}>Sign In</a>
-                        </Link>
-                    )}
                     {/* {authenticatedState === 'authenticated' && (
                         <Link href="/play/trivia">
                             <a style={linkStyle}>Continue previous game</a>
@@ -70,11 +65,16 @@ function MyApp({ Component, pageProps }) {
                             <a style={linkStyle}>Submit a new question</a>
                         </Link>
                     )}
-                    <Link href="/help" >
-                        <a style={homeLink}>Help</a>
-                    </Link>
                 </div>
                 <div style={rightButtons}>
+                    <Link href="/help" >
+                        <a style={linkStyle}>Help</a>
+                    </Link>
+                    {authenticatedState === 'not-authenticated' && (
+                        <Link href="/sign-in">
+                            <a style={linkStyle}>Sign In</a>
+                        </Link>
+                    )}
                     {authenticatedState === 'authenticated' && (
                         <a style={linkStyle} onClick={async () => {
                             await supabase.auth.signOut()
@@ -84,6 +84,16 @@ function MyApp({ Component, pageProps }) {
                 </div>
             </nav>
             <Component {...pageProps} />
+            <div style={emptyDiv} />
+            <footer style={footer}>
+                Powered by
+                <Image
+                    src="/supabase-logo-dark.png"
+                    alt="Supabase logo"
+                    width="100"
+                    height="20"
+                />
+            </footer>
         </div>
     )
 }
@@ -91,31 +101,56 @@ function MyApp({ Component, pageProps }) {
 const navStyle = {
     display: 'flex',
     height: '5rem',
+    flexWrap: 'wrap',
     alignItems: 'center',
     padding: '0 1.2rem',
     boxShadow: 'rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px'
 }
 
 const homeLink = {
-    marginRight: '2rem',
-    cursor: 'pointer'
+    marginRight: '0.3rem',
+    cursor: 'pointer',
+    color: 'aliceblue',
+    fontSize: '1.2rem'
 }
 
 const linkStyle = {
-    marginRight: 10,
+    marginRight: 3,
     cursor: 'pointer'
 }
 const rightButtons = {
     flexGrow: 1,
+    height: '100%',
+    alignItems: 'center',
     justifyContent: 'flex-end',
-    display: 'flex'
+    display: 'flex',
+    gap: '0.5rem'
 }
 
 const leftButtons = {
-    flexGrow: 5,
+    height: '100%',
+    alignItems: 'center',
+    flexGrow: 4,
     display: 'flex',
     gap: '1rem'
 }
 
+const footer = {
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'var(--bodyColor)',
+    height: '2rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1rem',
+    gap: '0.5rem',
+    boxShadow: 'rgba(0, 0, 0, 0.96) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px'
+}
+
+const emptyDiv = {
+    height: '1.5rem'
+}
 
 export default MyApp
