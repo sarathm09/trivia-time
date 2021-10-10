@@ -83,7 +83,7 @@ const SubmitQuestions = ({ categories, difficulties }) => {
                 <meta property="og:title" content="Submit questions" key="title" />
             </Head>
             <div className={styles.submitBox}>
-                <h2>Submit new Questions</h2>
+                <h2>Submit a new question</h2>
                 <div className={styles.infoCard}>
                     Please note that the questions you submit will reflect in the app only after the admin reviews and approves it
                 </div>
