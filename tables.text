@@ -1,0 +1,38 @@
+Table name: profile
+Fields: 
+    id: uuid
+    updated_at: timestamp
+    username: text
+    avatar_url: text
+    website: text
+
+Table name: question
+Fields:
+    id: uuid
+    created_at: timestamp
+    category: text
+    difficulty: text
+    question: text
+    options: text[]
+    answer: text
+    base_score: int8
+
+Table name: session
+Fields:
+    user_id: uuid
+    session_id: uuid
+    created_at: timestamp
+    active: bool
+    updated_at: timestamp
+    score: int8
+    categories: text[]
+    difficulties: text[]
+
+
+Table name: session_questions
+Fields:
+    session_id: uuid
+    question_id: uuid
+    attempt: int4
+    answer: text
+    score: int8
