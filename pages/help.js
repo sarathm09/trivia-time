@@ -1,8 +1,14 @@
-import styles from '#styles/Help.module.css';
+import Head from 'next/head'
+import styles from '#styles/Help.module.css'
 
 const index = () => {
     return (
         <div className={styles.container}>
+            <Head>
+                <title>Trivia Time - Help</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta property="og:title" content="Trivia Time Help" key="title" />
+            </Head>
             <h2>Help</h2>
             <div className={styles.helpBox}>
                 <h3>Logging in</h3>

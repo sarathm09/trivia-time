@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react'
 import styles from '../styles/SignIn.module.css'
 import { supabase } from '#utils/supabase'
 
@@ -21,6 +22,11 @@ export default function SignIn() {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>Trivia Time - Sign in</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta property="og:title" content="Sign in to Trivia Time" key="title" />
+            </Head>
             <div className={styles.signInBox}>
                 <h1 className={styles.title}>
                     Sign In
