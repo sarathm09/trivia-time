@@ -23,6 +23,23 @@ I've used [Vercel](https://vercel.com/) to deploy the app. You can access it ove
 ![Help](images/help.png)
 
 
+
+## Features supported
+- Login with email, Google, Github and Twitter
+- Over 3k questions from 20+ categories and various difficulty levels
+- Start a new game with any of the selected categories and difficulty level
+- View your previous game scores, and see the list of top 20 players worldwide
+- Play an unlimited number of times
+- Dark mode
+
+## Features planned
+- Allow questions to use files other than images (like a video/sound clip)
+- Enhance the user profile to add avatar, nick name etc
+- Capability to host competitions/tournaments to compete with a set of people
+- Bulk upload of questions in excel/json format
+- Integrate with other auth providers
+
+
 ## Running the app locally
 This project uses Next.js. So running the project locally would need the following steps:
 1. Create an environment file _.env.local_ in the root directory and add the following details into it:
