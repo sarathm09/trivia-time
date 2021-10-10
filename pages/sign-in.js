@@ -33,7 +33,7 @@ export default function SignIn() {
                     <>
                         <div className={styles.signInWithMagicLink}>
                             <label htmlFor="sign-in-with-email">Sign in with your email</label>
-                            <input id="sign-in-with-email" onChange={e => setEmail(e.target.value)} className={styles.emailBox} />
+                                <input id="sign-in-with-email" type="email" placeholder="Sign in with email" onChange={e => setEmail(e.target.value)} className={styles.emailBox} />
                             <button onClick={() => signIn()} className={styles.signInButton}>Sign In</button>
                         </div>
                         <div className={styles.signInWithProviders}>
