@@ -15,8 +15,8 @@
 .signInBox {
     height: 45vh;
     width: 100%;
-    min-width: 50rem;
-    max-width: 30vw;
+    min-width: 20rem;
+    max-width: 70vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,7 +43,13 @@
 
 .signInWithProviders {
     height: 45rem;
-    width: 50%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signInWithProviders button {
+    width: 10rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -54,6 +60,7 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    margin: 0.5rem 0;
 }
 
 .emailBox {

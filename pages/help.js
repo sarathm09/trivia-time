@@ -14,13 +14,14 @@ const index = () => {
                 <h3>Logging in</h3>
                 <p>
                     This game supports multiple sign in methods. They are:
-                    <ul>
-                        <li>Signing in with magic link (email)</li>
-                        <li>Signing in with Google</li>
-                        <li>Signing in with Github</li>
-                        <li>Signing in with Twitter</li>
-                    </ul>
-
+                </p>
+                <ul>
+                    <li>Signing in with magic link (email)</li>
+                    <li>Signing in with Google</li>
+                    <li>Signing in with Github</li>
+                    <li>Signing in with Twitter</li>
+                </ul>
+                <p>
                     In the first approach, you have to enter your email address and we&apos;ll mail you a top secret &quot;magic&quot; link 😉
                     Just click on the link and you&apos;ll be redirected to the app and magically logged in 🙂
                     <br />

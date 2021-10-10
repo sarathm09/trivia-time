@@ -39,24 +39,24 @@ export default function SignIn() {
                     <>
                         <div className={styles.signInWithMagicLink}>
                             <label htmlFor="sign-in-with-email">Sign in with your email</label>
-                                <input id="sign-in-with-email" type="email" placeholder="Sign in with email" onChange={e => setEmail(e.target.value)} className={styles.emailBox} />
+                                <input id="sign-in-with-email" type="email" placeholder="Enter your email address" onChange={e => setEmail(e.target.value)} className={styles.emailBox} />
                             <button onClick={() => signIn()} className={styles.signInButton}>Sign In</button>
                         </div>
                         <div className={styles.signInWithProviders}>
-
+                                <label>Or, you could also sign in with </label>
                             <button className={styles.signInProvider} onClick={() => signIn('google')}>
                                 <Image className={styles.signInProviderLogo} width="20px" height="20px" src="/google.svg" alt="Google logo" />
-                                Login with Google
+                                    Google
                             </button>
 
                             <button className={styles.signInProvider} onClick={() => signIn('github')}>
                                 <Image className={styles.signInProviderLogo} width="20px" height="20px" src="/github.svg" alt="Github logo" />
-                                Login with Github
+                                    Github
                             </button>
 
                             <button className={styles.signInProvider} onClick={() => signIn('twitter')}>
                                 <Image className={styles.signInProviderLogo} width="20px" height="20px" src="/twitter.svg" alt="Twitter logo" />
-                                Login with Twitter
+                                    Twitter
                             </button>
 
                         </div>

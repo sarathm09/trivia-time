@@ -38,3 +38,7 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+nav a {
+    cursor: pointer;
+}

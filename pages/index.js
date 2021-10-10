@@ -8,19 +8,21 @@ import NewGameInput from '../components/NewGameInput'
 
 export default function Profile({ user, userSessions, lastGameScore, totalScore, highestScore, correctlyAnswered, rank, topScorers }) {
     const [profile, setProfile] = useState(user)
-
     const router = useRouter()
 
     useEffect(() => {
         if (!user) {
-            fetchProfile()
-            setTimeout(() => {
-                router.push('/')
-            }, 3000)
-        } else {
-            setProfile(user)
+            fetchProfile().then(profile => {
+                if (!profile) {
+                    setTimeout(() => {
+                        router.push('/')
+                    }, 1500)
+                } else {
+                    setProfile(user)
+                }
+            })
         }
-    }, [])
+    }, [user, profile, router])
 
     async function fetchProfile() {
         const profileData = await supabase.auth.user()
@@ -29,6 +31,7 @@ export default function Profile({ user, userSessions, lastGameScore, totalScore,
         } else {
             setProfile(profileData)
         }
+        return profileData
     }
 
     return (
@@ -70,7 +73,7 @@ export async function getServerSideProps({ req }) {
     if (u2) user = u2
 
     if (!user) {
-        return { props: {} }
+        return { props: {}, redirect: { destination: '/sign-in' } }
     }
 
     let totalScore = 0, lastGameScore = 0, highestScore = 0
