@@ -1,28 +1,35 @@
 .container {
     height: calc(100vh - 10rem);
     width: 100vw;
-    min-height: 100vh;
     padding: 0 0.5rem;
     margin-left: auto;
     margin-right: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
 .signInBox {
-    height: 45vh;
+    min-height: 35vh;
+    max-height: 45vh;
     width: 100%;
-    min-width: 20rem;
+    height: fit-content;
+    min-width: 25rem;
     max-width: 30vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
     border-radius: 1rem;
+    padding-bottom: 2rem;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
+}
+
+@media screen and (max-height: 20rem) {
+    .container {
+        height: 100vh;
+    }
 }
 
 .title {
@@ -36,6 +43,7 @@
 
 .signInWithMagicLink {
     height: 5rem;
+    margin-bottom: 1rem;
     width: 70%;
     margin-left: auto;
     margin-right: auto;
@@ -43,13 +51,18 @@
 
 .signInWithProviders {
     height: 45rem;
-    width: 100%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .signInWithProviders button {
-    width: 20rem;
+    max-width: 20rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -128,7 +141,7 @@
 }
 
 .infoLabel {
-  height: 10rem;
-  font-size: medium;
-  margin-bottom: 10rem;
+    height: 10rem;
+    font-size: medium;
+    margin-bottom: 10rem;
 }
