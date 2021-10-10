@@ -1,17 +1,22 @@
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { supabase } from '#utils/supabase'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import styles from '#styles/Profile.module.css'
 import UserProfile from '../components/UserProfile'
-import NewGameInput from '../components/NewGameInput';
+import NewGameInput from '../components/NewGameInput'
 
-export default function Profile({ userSessions, lastGameScore, totalScore, highestScore, correctlyAnswered, rank, topScorers }) {
-    const [profile, setProfile] = useState(null)
+export default function Profile({ user, userSessions, lastGameScore, totalScore, highestScore, correctlyAnswered, rank, topScorers }) {
+    const [profile, setProfile] = useState(user)
 
     const router = useRouter()
 
     useEffect(() => {
-        fetchProfile()
+        if (!user) {
+            fetchProfile()
+        } else {
+            setProfile(user)
+        }
     }, [])
 
     async function fetchProfile() {
@@ -25,6 +30,11 @@ export default function Profile({ userSessions, lastGameScore, totalScore, highe
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>Trivia Time</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta property="og:title" content="Trivia Time" key="title" />
+            </Head>
             <div className={styles.contentBox}>
                 <div className={styles.newSessionBox}>
                     <NewGameInput profile={profile} />
@@ -48,10 +58,11 @@ export default function Profile({ userSessions, lastGameScore, totalScore, highe
 
 
 export async function getServerSideProps({ req }) {
-    const { user } = await supabase.auth.api.getUserByCookie(req)
+    // const { user } = await supabase.auth.api.getUserByCookie(req) // This is not working!!!
+    const { user } = await supabase.auth.api.getUser(req.cookies['sb:token'])
 
     if (!user) {
-        return { props: {}, redirect: { destination: '/sign-in' } }
+        return { props: {} }
     }
 
     let totalScore = 0, lastGameScore = 0, highestScore = 0

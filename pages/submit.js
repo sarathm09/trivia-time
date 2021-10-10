@@ -1,9 +1,10 @@
-import styles from '#styles/Submit.module.css'
-import { useEffect, useState } from 'react'
-import { supabase } from '#utils/supabase'
-import { useRouter } from 'next/router'
-import { GiCheckMark } from 'react-icons/gi'
+import Head from 'next/head'
 import { v4 as uuid } from 'uuid'
+import { useRouter } from 'next/router'
+import { supabase } from '#utils/supabase'
+import { useEffect, useState } from 'react'
+import { GiCheckMark } from 'react-icons/gi'
+import styles from '#styles/Submit.module.css'
 
 
 const SubmitQuestions = ({ categories, difficulties }) => {
@@ -34,14 +35,16 @@ const SubmitQuestions = ({ categories, difficulties }) => {
     }
 
     const onSubmitButtonClick = async () => {
-        if (!question || !question.trim().length < 5) {
+        if (!question || question.trim().length < 5) {
             setErrorMessage('Question cannot be empty')
-        } else if (!answerChoices || !answerChoices.some(ch => !ch.trim().length)) {
+        } else if (!answerChoices || answerChoices.some(ch => !ch.trim().length)) {
             setErrorMessage('Answer options cannot be empty')
-        } else if (!selectedCategory || !selectedCategory.trim().length) {
+        } else if (!selectedCategory || !selectedCategory?.trim().length) {
             setErrorMessage('Select a category˝')
-        } else if (!selectedDifficulty || !selectedDifficulty.trim().length) {
+        } else if (!selectedDifficulty || !selectedDifficulty?.trim().length) {
             setErrorMessage('Select some difficulty level')
+        } else if (!correctAnswerIndex || correctAnswerIndex < 1 || correctAnswerIndex > 4) {
+            setErrorMessage('Please mark the correct answer')
         } else {
             const questionId = uuid()
             if (file) {
@@ -60,7 +63,7 @@ const SubmitQuestions = ({ categories, difficulties }) => {
                         difficulty: selectedDifficulty,
                         question,
                         options: answerChoices,
-                        answer: answerChoices[correctAnswerIndex],
+                        answer: answerChoices[correctAnswerIndex - 1],
                         base_score: selectedDifficulty === 'hard' ? 300 : selectedDifficulty === 'medium' ? 200 : 100,
                         user_id: profile.id
                     },
@@ -74,6 +77,11 @@ const SubmitQuestions = ({ categories, difficulties }) => {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>Trivia Time - Submit a question</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta property="og:title" content="Submit questions" key="title" />
+            </Head>
             <div className={styles.submitBox}>
                 <h2>Submit new Questions</h2>
                 <div className={styles.infoCard}>

@@ -1,27 +1,34 @@
-import '../styles/globals.css'
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { supabase } from '#utils/supabase'
+import '../styles/globals.css'
 import { useRouter } from 'next/router'
+import { supabase } from '#utils/supabase'
+import { useState, useEffect } from 'react'
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter()
     const [authenticatedState, setAuthenticatedState] = useState('not-authenticated')
 
+    /* fires when a user signs in or out */
+    supabase.auth.onAuthStateChange((event, session) => {
+        handleAuthChange(event, session)
+        if (event === 'SIGNED_IN') {
+            setAuthenticatedState('authenticated')
+            router.push('/')
+        }
+        if (event === 'SIGNED_OUT') {
+            setAuthenticatedState('not-authenticated')
+        }
+    })
+
     useEffect(() => {
-        /* fires when a user signs in or out */
-        supabase.auth.onAuthStateChange((event, session) => {
-            handleAuthChange(event, session)
-            if (event === 'SIGNED_IN') {
-                setAuthenticatedState('authenticated')
-                router.push('/')
-            }
-            if (event === 'SIGNED_OUT') {
-                setAuthenticatedState('not-authenticated')
-            }
-        })
         checkUser()
     }, [])
+
+    useEffect(() => {
+        if (authenticatedState === 'authenticated' && location.href.includes('sign-in')) {
+            router.push('/')
+        }
+    }, [authenticatedState, router])
 
     async function checkUser() {
         /* when the component loads, checks user to show or hide Sign In link */
@@ -58,6 +65,11 @@ function MyApp({ Component, pageProps }) {
                             <a style={linkStyle}>Continue previous game</a>
                         </Link>
                     )} */}
+                    {authenticatedState === 'authenticated' && (
+                        <Link href="/submit">
+                            <a style={linkStyle}>Submit a new question</a>
+                        </Link>
+                    )}
                     <Link href="/help" >
                         <a style={homeLink}>Help</a>
                     </Link>

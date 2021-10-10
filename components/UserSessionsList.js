@@ -1,7 +1,16 @@
 import styles from '#styles/Profile.module.css'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 const UserSessionsList = ({ userSessions }) => {
+    useEffect(() => {
+        if (userSessions) {
+            userSessions.forEach(session => {
+                session.categories = session.categories?.map(c => c.split(':').slice(-1)[0].trim())
+            })
+        }
+    }, [userSessions])
+
     return (
         <div className={styles.userSessionsList}>
             <h3>Games Played</h3>
@@ -23,7 +32,7 @@ const UserSessionsList = ({ userSessions }) => {
                             <tr key={session.session_id} className={session.active ? styles.activeRow : ''}>
                                 <td>{i + 1}</td>
                                 <td>{new Date(session.created_at).toLocaleString()}</td>
-                                <td>{session.categories.join(', ')}</td>
+                                <td>{session.categories.slice(0, 5).join(', ')} {session.categories.length > 5 ? `+${session.categories.length - 5} more` : ''}</td>
                                 <td>{session.difficulties.join(', ')}</td>
                                 <td>{session.score}</td>
                                 <td>{session.active ? 'Ongoing' : 'Completed'}</td>
