@@ -14,6 +14,9 @@ export default function Profile({ user, userSessions, lastGameScore, totalScore,
     useEffect(() => {
         if (!user) {
             fetchProfile()
+            setTimeout(() => {
+                router.push('/')
+            }, 3000)
         } else {
             setProfile(user)
         }
@@ -58,8 +61,13 @@ export default function Profile({ user, userSessions, lastGameScore, totalScore,
 
 
 export async function getServerSideProps({ req }) {
-    // const { user } = await supabase.auth.api.getUserByCookie(req) // This is not working!!!
-    const { user } = await supabase.auth.api.getUser(req.cookies['sb:token'])
+    let user
+
+    const { user: u1 } = await supabase.auth.api.getUserByCookie(req) // This is not working!!!
+    const { user: u2 } = await supabase.auth.api.getUser(req.cookies['sb:token'])
+
+    if (u1) user = u1
+    if (u2) user = u2
 
     if (!user) {
         return { props: {} }
