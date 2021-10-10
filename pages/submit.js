@@ -14,6 +14,7 @@ const SubmitQuestions = ({ categories, difficulties }) => {
     const [question, setQuestion] = useState()
     const [answerChoices, setAnswerChoices] = useState(new Array(4).fill(''))
     const [errorMessage, setErrorMessage] = useState()
+    const [file, setFile] = useState()
 
     const [profile, setProfile] = useState(null)
 
@@ -32,10 +33,6 @@ const SubmitQuestions = ({ categories, difficulties }) => {
         }
     }
 
-    useEffect(() => {
-
-    }, [])
-
     const onSubmitButtonClick = async () => {
         if (!question || !question.trim().length < 5) {
             setErrorMessage('Question cannot be empty')
@@ -46,11 +43,18 @@ const SubmitQuestions = ({ categories, difficulties }) => {
         } else if (!selectedDifficulty || !selectedDifficulty.trim().length) {
             setErrorMessage('Select some difficulty level')
         } else {
+            const questionId = uuid()
+            if (file) {
+                const { data, error } = await supabase.storage
+                    .from('question-images')
+                    .upload(`questions/${questionId}.png`, file)
+            }
+
             const { data, error } = await supabase
                 .from('question_unverified')
                 .insert([
                     {
-                        id: uuid(),
+                        id: questionId,
                         created_at: new Date().toISOString(),
                         category: selectedCategory,
                         difficulty: selectedDifficulty,
@@ -127,12 +131,12 @@ const SubmitQuestions = ({ categories, difficulties }) => {
                 </div>
 
                 <div className={styles.fileUploadBox}>
-                    <input type="file" />
+                    <input type="file" onChange={(e) => setFile(e.target.files[0])} />
                 </div>
 
                 <div className={styles.submitBtnBox}>
                     {errorMessage && (<p className={styles.errorMessage}>{errorMessage}</p>)}
-                    <button type="submit">Submit</button>
+                    <button type="submit" onClick={() => onSubmitButtonClick()}>Submit</button>
                 </div>
 
 
