@@ -32,10 +32,17 @@ const index = () => {
                 <h3>Playing Trivia</h3>
                 <p>In order to start a new game, first sign in into the app. Then select the categories from which you want the questions to come from (by default all are selected). After that, select the difficulty level and click on start to start the game</p>
                 <p>Once the game starts, it is pretty much straight forward. You have a question and four possible options for every answer. The category, difficulty and the score for each question is mentioned in the same page. The score keeps changing based on the number of attempts.</p>
+                <p>You have three chances to get the answer right. For each attempt, the score will be different</p>
             </div>
             <div className={styles.helpBox}>
                 <h3>Scoring</h3>
                 <p>Every question has a base score. Based on the number of attempts for the question, the actual score that you get changes. The lower the number of attempts, the better the score. If you do not answer a question, the same base score is subtracted from your total score</p>
+                <p>The base score for hard questions is 300, for medium it is 200 and for easy it is 100. If the base score is <i>x</i> and you give the correct answer in the first attempt, then the score will be <i>x</i>. If the first attempt was wrong and you get it right the next time, then the score will be <i>x/2</i> and if it was the third attempt in which you got it right, then the score will be <i>x/5</i>. Finally, if all your three attempts are wrong, then the value <i>x</i> will be subtracted from your total score</p>
+            </div>
+            <div className={styles.helpBox}>
+                <h3>Submitting new questions</h3>
+                <p>If you have any questions that you wish to submit, click on the &dquote;Submit a new question&dquote; button on the top. In the submit page, select the category, difficulty level, enter the question, answer options, select the correct answer and then click on submit. You can also choose to upload a file (if the question needs an image to be shown).</p>
+                <i>Please note that the questions will have to go through a review and approval process before it is actually made available in the app, so your changes might not reflect immediately</i>
             </div>
             <div className={styles.helpBox}>
                 <h3>Tools</h3>

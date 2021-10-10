@@ -1,13 +1,11 @@
-import { useRouter } from 'next/router'
 import ProfileCard from './ProfileCard'
 import TopScorersCard from './TopScorersCard'
 import styles from '#styles/Profile.module.css'
 import UserSessionsList from './UserSessionsList'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 const UserProfile = ({ profile, lastGameScore, totalScore, highestScore, correctlyAnswered, rank, userSessions, topScorers }) => {
-    const router = useRouter()
-    const [cardValues, setCardValues] = useState({ lastGameScore, totalScore, highestScore, correctlyAnswered, rank })
+    const [cardValues, _] = useState({ lastGameScore, totalScore, highestScore, correctlyAnswered, rank })
 
     return (
         <>

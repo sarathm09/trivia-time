@@ -1,8 +1,7 @@
 .container {
-    height: 100vh;
+    min-height: calc(100vh - 10rem);
     width: 99vw;
     max-width: 1200px;
-    min-height: 100vh;
     padding: 0 0.5rem;
     margin-left: auto;
     margin-right: auto;
@@ -10,9 +9,14 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 5rem;
-    gap: 2rem;
-    margin-bottom: 3rem;
+    padding: 1rem 5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 5rem;
+}
+
+.container h2 {
+    font-size: 2.5rem;
 }
 
 .container h1,
@@ -21,12 +25,22 @@
     text-align: center;
 }
 
+.helpBox h3 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    word-wrap: break-word;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: inset rgba(0, 0, 0, 0.56) 0px 10px 36px 0px, rgba(0, 0, 0, 0.56) 0px 0px 0px 1px;
+}
+
 .helpBox {
-    height: 45vh;
     width: 100%;
     min-width: 30rem;
     display: flex;
-    padding: 1rem;
+    padding: 2rem;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
@@ -36,7 +50,12 @@
 
 .helpBox h3 {
     width: 100%;
-    margin-top: 2rem;
     margin-bottom: 1rem;
     text-align: start;
+}
+
+.helpBox p,
+.helpBox ul {
+    text-align: left;
+    width: 100%;
 }

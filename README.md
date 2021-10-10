@@ -8,6 +8,21 @@ The base set of questions are from the [Open Trivia Database](https://opentdb.co
 I've used [Vercel](https://vercel.com/) to deploy the app. You can access it over here: [https://trivia-time-sn.vercel.app](https://trivia-time-sn.vercel.app/)
 
 
+## Screenshots
+
+![Sign in](images/sign-in.png)
+
+![Profile](images/profile.png)
+
+![Trivia page](images/trivia-1.png)
+
+![Trivia page](images/trivia-2.png)
+
+![Submit new question](images/submit-new-question.png)
+
+![Help](images/help.png)
+
+
 ## Running the app locally
 This project uses Next.js. So running the project locally would need the following steps:
 1. Create an environment file _.env.local_ in the root directory and add the following details into it:
