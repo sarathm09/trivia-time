@@ -16,7 +16,7 @@
     height: 45vh;
     width: 100%;
     min-width: 20rem;
-    max-width: 70vw;
+    max-width: 30vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +49,7 @@
 }
 
 .signInWithProviders button {
-    width: 10rem;
+    width: 20rem;
     margin-left: auto;
     margin-right: auto;
 }
